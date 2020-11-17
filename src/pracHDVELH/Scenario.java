@@ -17,11 +17,12 @@ public class Scenario {
 
 	/* TO BE COMPLETED */
 	public Scenario(GUIManager gui, Event startevent) {
-
+		this.head = startevent;
+		this.gui = gui;
 	}
 
 	public String run() {
-		return "Coucou";
+
 	}
 
 

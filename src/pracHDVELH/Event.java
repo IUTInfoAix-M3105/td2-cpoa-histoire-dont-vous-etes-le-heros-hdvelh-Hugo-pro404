@@ -5,6 +5,8 @@
  */
 package pracHDVELH;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 import myUtils.ErrorNaiveHandler;
@@ -17,9 +19,12 @@ public class Event extends NodeMultiple {
 	public static final String ERROR_MSG_UNEXPECTED_END = "Sorry, for some unexpected reason the story ends here...";
 	public static final String PROMPT_ANSWER = "Answer: ";
 	public static final String WARNING_MSG_INTEGER_EXPECTED = "Please input a integer within range!";
+	private GUIManager gui;
+	private String text;
 
-	public Event(GUIManager gui, String Txt) {
-
+	public Event(GUIManager gui, String txt) {
+		gui = new GUIManager(System.in, System.out, System.err);
+		this.text = txt;
     }
 //
 //	/**
@@ -80,14 +85,15 @@ public class Event extends NodeMultiple {
 //		/* TO BE COMPLETED */
 //	}
 //
-//	/**
-//	 * @see pracHDVELH.NodeMultiple#getDaughter(int)
-//	 */
-//	@Override
-//	public Event getDaughter(int i) {
-//		/* TO BE COMPLETED */
-//	}
-//
+	/**
+	 * @see pracHDVELH.NodeMultiple#getDaughter(int)
+	 */
+	@Override
+	public Event getDaughter(int i) {
+		/* TO BE COMPLETED */
+		return null;
+	}
+
 //	/**
 //	 * @see pracHDVELH.NodeMultiple#setDaughter(NodeMultiple, int)
 //	 * @param daughter
@@ -118,6 +124,18 @@ public class Event extends NodeMultiple {
 //		/* TO BE COMPLETED */
 //	}
 //
+	public Event run() {
+		gui.output(text);
+		if(hasDaughters())
+		{
+			gui.output(PROMPT_ANSWER);
+			int t = gui.getInputReader().nextInt();
+			Event nextEvent = this.getDaughter(t - 1);
+			nextEvent.run();
+		}
+		return this;
+	}
+
 //	/* Methods */
 //	/* TO BE COMPLETED */
 }
