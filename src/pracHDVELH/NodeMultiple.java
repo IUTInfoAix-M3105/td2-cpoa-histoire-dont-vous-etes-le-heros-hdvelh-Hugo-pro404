@@ -100,7 +100,7 @@ public class NodeMultiple {
 	 * daughter node.
 	 */
 	public boolean hasDaughters() {
-		/* TO BE COMPLETED */
+		return true;
 	}
 
 //	/* Constructors */

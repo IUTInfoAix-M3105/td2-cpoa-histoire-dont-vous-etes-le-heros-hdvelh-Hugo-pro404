@@ -22,7 +22,7 @@ public class Scenario {
 	}
 
 	public String run() {
-
+		return "coucou";
 	}
 
 
