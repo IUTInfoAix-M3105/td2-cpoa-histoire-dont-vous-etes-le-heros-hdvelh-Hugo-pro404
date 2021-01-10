@@ -40,6 +40,10 @@ public class GUIManager {
 	out.println(s);
   }
 
+    public void setInputReader(Scanner inputReader){
+        this.inputReader = inputReader;
+    }
+
   /**
    * @return
    */
@@ -51,8 +55,12 @@ public class GUIManager {
    * Constructor. Sets the GUI to the default system IOs.
    */
   public GUIManager() {
-	this(System.in, System.out, System.err);
+      this(System.in, System.out, System.err);
   }
+
+  public int getAnswer(){
+        return inputReader.nextInt();
+    }
 
   /**
    * @param in

@@ -20,124 +20,122 @@ public class Event extends NodeMultiple {
 	public static final String PROMPT_ANSWER = "Answer: ";
 	public static final String WARNING_MSG_INTEGER_EXPECTED = "Please input a integer within range!";
 	private GUIManager gui;
-	private String text;
+	private String playerAnswer = null;
+	private int chosenPath;
+	private String data;
+	private int Id;
 
-	public Event(GUIManager gui, String txt) {
+	public Event(GUIManager gui, String texte) {
 		gui = new GUIManager(System.in, System.out, System.err);
-		this.text = txt;
+		this.data = texte;
     }
-//
-//	/**
-//	 * @return the playerAnswer
-//	 */
-//	public String getPlayerAnswer() {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/**
-//	 * @param playerAnswer the playerAnswer to set
-//	 */
-//	public void setPlayerAnswer(String playerAnswer) {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/**
-//	 * @return the reader
-//	 */
-//	public Scanner getReader() {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/**
-//	 * @param reader the reader to set
-//	 */
-//	public void setReader(Scanner reader) {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/**
-//	 * @return the chosenPath
-//	 */
-//	public int getChosenPath() {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/**
-//	 * @param chosenPath the chosenPath to set
-//	 */
-//	public void setChosenPath(int chosenPath) {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/* Methods */
-//	/**
-//	 * @see pracHDVELH.NodeMultiple#getData()
-//	 */
-//	public String getData() {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/**
-//	 * @see pracHDVELH.NodeMultiple#setData(Object)
-//	 * @param data
-//	 */
-//	public void setData(String data) {
-//		/* TO BE COMPLETED */
-//	}
-//
+
+	/**
+	 * @return the playerAnswer
+	 */
+	public String getPlayerAnswer() {
+		return this.playerAnswer;
+	}
+
+	/**
+	 * @param playerAnswer the playerAnswer to set
+	 */
+	public void setPlayerAnswer(String playerAnswer) {
+		this.playerAnswer = playerAnswer;
+	}
+
+	/**
+	 * @return the reader
+	 */
+	public Scanner getReader() {
+		return this.gui.getInputReader();
+	}
+
+	/**
+	 * @param reader the reader to set
+	 */
+	public void setReader(Scanner reader) {
+		this.gui.setInputReader(reader);
+	}
+
+	/**
+	 * @return the chosenPath
+	 */
+	public int getChosenPath() {
+		return this.chosenPath;
+	}
+
+	/**
+	 * @param chosenPath the chosenPath to set
+	 */
+	public void setChosenPath(int chosenPath) {
+		this.chosenPath = chosenPath;
+	}
+
+	/* Methods */
+	/**
+	 * @see pracHDVELH.NodeMultiple#getData()
+	 */
+	public String getData() {
+		return this.data.toString();
+	}
+
+	/**
+	 * @see pracHDVELH.NodeMultiple#setData(Object)
+	 * @param data
+	 */
+	public void setData(String data) {
+		this.data = data;
+	}
+
 	/**
 	 * @see pracHDVELH.NodeMultiple#getDaughter(int)
 	 */
 	@Override
 	public Event getDaughter(int i) {
-		/* TO BE COMPLETED */
-		return null;
+		return (Event)
+			super.getDaughter(i);
 	}
 
-//	/**
-//	 * @see pracHDVELH.NodeMultiple#setDaughter(NodeMultiple, int)
-//	 * @param daughter
-//	 * @param i
-//	 */
-//	public void setDaughter(Event daughter, int i) {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/**
-//	 * @return the gui
-//	 */
-//	public GUIManager getGui() {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/**
-//	 * @param gui the gui to set
-//	 */
-//	public void setGui(GUIManager gui) {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/**
-//	 * @return the id
-//	 */
-//	public int getId() {
-//		/* TO BE COMPLETED */
-//	}
-//
+	/**
+	 * @see pracHDVELH.NodeMultiple#setDaughter(NodeMultiple, int)
+	 * @param daughter
+	 * @param i
+	 */
+	public void setDaughter(Event daughter, int i) {
+		 super.setDaughter(daughter,i);
+	}
+
+	/**
+	 * @return the gui
+	 */
+	public GUIManager getGui() {
+		return this.gui;
+	}
+
+	/**
+	 * @param gui the gui to set
+	 */
+	public void setGui(GUIManager gui) {
+		this.gui = gui;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return this.Id;
+	}
+
 	public Event run() {
-		gui.output(text);
-		if(hasDaughters())
-		{
-			gui.output(PROMPT_ANSWER);
-			int t = gui.getInputReader().nextInt();
-			Event nextEvent = this.getDaughter(t - 1);
-			nextEvent.run();
-		}
-		return this;
-	}
+		this.gui.output(getData());
+		int t = gui.getAnswer() - 1;
 
-//	/* Methods */
-//	/* TO BE COMPLETED */
+		if(t > NODE_MAX_ARITY) {
+			return null;
+		}
+		return getDaughter(t);
+	}
 }
 
 // eof

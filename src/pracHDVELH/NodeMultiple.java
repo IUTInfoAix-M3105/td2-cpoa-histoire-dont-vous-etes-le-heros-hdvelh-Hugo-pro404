@@ -6,6 +6,7 @@
 package pracHDVELH;
 
 import myUtils.ErrorNaiveHandler;
+import org.w3c.dom.Node;
 
 /**
  * @author prost
@@ -15,14 +16,17 @@ public class NodeMultiple {
 	public static final int ERROR_STATUS_INDEX_OUT_OF_RANGE = -1;
 	public static final String ERROR_MSG_INDEX_OUT_OF_RANGE = "Index out of range";
 	public static int NODE_MAX_ARITY = 10;
+	
+	private Object data;
+	private NodeMultiple[] daughters;
 
-//	/* Overridden methods */
-//	@Override
-//	public String toString() {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/* Getters/Setters */
+	/* Overridden methods */
+	@Override
+	public String toString() {
+		return this.data.toString();
+	}
+
+	/* Getters/Setters */
 
 	/**
 	 * Gets the {@code i}th daughter node.
@@ -33,8 +37,7 @@ public class NodeMultiple {
 	 * @return the {@code i}th daughter node, or {@code null} if it does not exist.
 	 */
 	public NodeMultiple getDaughter(int i) {
-		/* TO BE COMPLETED */
-		return null;
+		return this.daughters[i];
 	}
 
 	/**
@@ -52,22 +55,25 @@ public class NodeMultiple {
 	 * @param i        the daughter node's index
 	 */
 	public void setDaughter(NodeMultiple daughter, int i) {
-		/* TO BE COMPLETED */
+		if (i < 0 || i >= NODE_MAX_ARITY)
+			return;
+		else
+			this.daughters[i - 1] = daughter;
 	}
 
-//	/**
-//	 * @return all the daughters
-//	 */
-//	public NodeMultiple[] getDaughters() {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/**
-//	 * @param daughters the daughters to set
-//	 */
-//	public void setDaughters(NodeMultiple[] daughters) {
-//		/* TO BE COMPLETED */
-//	}
+	/**
+	 * @return all the daughters
+	 */
+	public NodeMultiple[] getDaughters() {
+		return this.daughters;
+	}
+
+	/**
+	 * @param daughters the daughters to set
+	 */
+	public void setDaughters(NodeMultiple[] daughters) {
+		this.daughters = daughters;
+	}
 
 	/**
 	 * Adds the given {@code daughter} node at the first available index.
@@ -78,48 +84,66 @@ public class NodeMultiple {
 	 * @param daughter
 	 */
 	public void addDaughter(NodeMultiple daughter) {
-		/* TO BE COMPLETED */
+		if (daughter == null) return;
+		int i = 0;
+		while (i < daughters.length) {
+			if (daughters[i] == null) {
+				daughters[i] = daughter;
+				return;
+			}
+			i = i+1;
+		}
+		return;
 	}
-//
-//	/**
-//	 * @return the content data
-//	 */
-//	public Object getData() {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/**
-//	 * @param data
-//	 */
-//	public void setData(Object data) {
-//		/* TO BE COMPLETED */
-//	}
-//
+
+	/**
+	 * @return the content data
+	 */
+	public Object getData() {
+		return this.data;
+	}
+
+	/**
+	 * @param data
+	 */
+	public void setData(Object data) {
+		this.data = data;
+	}
+
 	/**
 	 * @return {@code true} if and only if this node has at least one non-null
 	 * daughter node.
 	 */
 	public boolean hasDaughters() {
-		return true;
+		int i = 0;
+		while (i < daughters.length) {
+			if (daughters[i] != null)
+				return true;
+			i = i + 1;
+		}
+		return false;
 	}
 
-//	/* Constructors */
-//
-//	/**
-//	 * Default constructor.
-//	 */
-//	public NodeMultiple() {
-//		/* TO BE COMPLETED */
-//	}
-//
-//	/**
-//	 * Constructor. Sets the content data to {@code data} and creates an empty set
-//	 * of daughters.
-//	 *
-//	 * @param data
-//	 */
-//	public NodeMultiple(Object data) {
-//		/* TO BE COMPLETED */
-//	}
+	/* Constructors */
+
+	/**
+	 * Default constructor.
+	 */
+	public NodeMultiple() {
+		super();
+		data = new Object();// inutile...
+		daughters = new NodeMultiple[NODE_MAX_ARITY];
+	}
+
+	/**
+	 * Constructor. Sets the content data to {@code data} and creates an empty set
+	 * of daughters.
+	 *
+	 * @param data
+	 */
+	public NodeMultiple(Object data) {
+		this.data = data;
+		this.daughters = null;
+	}
 }
 // eof
